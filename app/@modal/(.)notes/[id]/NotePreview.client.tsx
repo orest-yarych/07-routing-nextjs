@@ -5,6 +5,7 @@ import { fetchNoteById } from '@/lib/api';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Loader from '@/components/Loader/Loader';
 import Modal from '@/components/Modal/Modal';
+import { useRouter } from 'next/navigation';
 
 interface NotePreviewClientProps {
   id: string;
@@ -21,13 +22,17 @@ export default function NotePreviewClient({ id }: NotePreviewClientProps) {
     refetchOnMount: false,
   });
 
+  const router = useRouter();
+  const closeModal = () => router.back();
+
   return (
     <>
       {isError && <ErrorMessage />}
       {isLoading && <Loader />}
       {note && (
-        <Modal>
+        <Modal onClose={closeModal}>
           <div className={css.container}>
+            <button onClick={closeModal}>Back</button>
             <div className={css.item}>
               <div className={css.header}>
                 <h2>{note.title}</h2>

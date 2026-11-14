@@ -3,17 +3,13 @@
 import { useEffect, type ReactNode } from 'react';
 import css from './Modal.module.css';
 import { createPortal } from 'react-dom';
-import { useRouter } from 'next/navigation';
 
 interface ModalProps {
   children: ReactNode;
+  onClose: () => void;
 }
 
-export default function Modal({ children }: ModalProps) {
-  const router = useRouter();
-
-  const onClose = () => router.back();
-
+export default function Modal({ children, onClose }: ModalProps) {
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) {
       onClose();
@@ -44,10 +40,7 @@ export default function Modal({ children }: ModalProps) {
       aria-modal="true"
       onClick={handleBackdropClick}
     >
-      <div className={css.modal}>
-        <button onClick={onClose}>Close</button>
-        {children}
-      </div>
+      <div className={css.modal}>{children}</div>
     </div>,
     document.body
   );

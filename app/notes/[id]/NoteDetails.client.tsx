@@ -1,5 +1,5 @@
 'use client';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import css from './NoteDetails.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '@/lib/api';
@@ -19,6 +19,9 @@ export default function NoteDetailsClient() {
     refetchOnMount: false,
   });
 
+  const router = useRouter();
+  const closeModal = () => router.back();
+
   return (
     <>
       {isError && <ErrorMessage />}
@@ -26,6 +29,7 @@ export default function NoteDetailsClient() {
       {note && (
         <main className={css.main}>
           <div className={css.container}>
+            <button onClick={closeModal}>Back</button>
             <div className={css.item}>
               <div className={css.header}>
                 <h2>{note.title}</h2>

@@ -20,8 +20,6 @@ const serverApi = axios.create({
 });
 
 export async function fetchNotes(query: string, page: number, tag?: string) {
-  console.log('TAG:', tag);
-
   const { data } = await serverApi.get<FetchNotesResponse>('/notes', {
     params: {
       search: query,
